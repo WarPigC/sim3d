@@ -1,0 +1,3 @@
+/home/archani/Projects/sim3d/build/CMakeFiles/sim3d.dir
+/home/archani/Projects/sim3d/build/CMakeFiles/edit_cache.dir
+/home/archani/Projects/sim3d/build/CMakeFiles/rebuild_cache.dir
