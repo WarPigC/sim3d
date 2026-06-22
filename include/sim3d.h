@@ -38,9 +38,9 @@ public:
 
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
-extern LTexture gPngTexture;
+extern LTexture gUpTexture, gDownTexture, gLeftTexture, gRightTexture, gWhiteTexture;
 
-constexpr int kScreenWidth{ 900 };
-constexpr int kScreenHeight{ 900 };
+constexpr int kScreenWidth{ 1280 };
+constexpr int kScreenHeight{ 600 };
 
 #endif 

@@ -1,9 +1,12 @@
 #include "sim3d.h"
+#include <SDL3/SDL_pixels.h>
+#include <SDL3/SDL_render.h>
+#include <SDL3/SDL_stdinc.h>
 
 
 SDL_Window* gWindow = nullptr;
 SDL_Renderer* gRenderer = nullptr;
-LTexture gPngTexture;
+LTexture gUpTexture, gDownTexture, gLeftTexture, gRightTexture, gWhiteTexture;
 
 
 
@@ -13,7 +16,7 @@ bool LTexture::loadFromFile(std::string path){
 	destroy();
 	SDL_Surface* loadedSurface;
 
-	if (loadedSurface = IMG_Load("src/preview.png"); loadedSurface == nullptr){
+	if (loadedSurface = IMG_Load(path.c_str()); loadedSurface == nullptr){
 		SDL_Log("Image not loaded! %s", SDL_GetError());
 	}
 	else {
@@ -47,7 +50,7 @@ bool init(){
 		success = false;
 	}
 	else {
-		if (SDL_CreateWindowAndRenderer("SDL3 rendering", kScreenWidth, kScreenWidth, 0, &gWindow, &gRenderer) == false){
+		if (SDL_CreateWindowAndRenderer("SDL3 keyboard", kScreenWidth, kScreenWidth, 0, &gWindow, &gRenderer) == false){
 			SDL_Log("Failed to create window and renderer! %s", SDL_GetError());
 			success = false;
 		}
@@ -60,9 +63,24 @@ bool loadMedia(){
 
 	bool success { true };
 
-
-	if (gPngTexture.loadFromFile("src/preview.png") == false){
-		SDL_Log("Failed to load png! %s", SDL_GetError());
+	if (gUpTexture.loadFromFile("src/up.jpg") == false){
+		SDL_Log("Coultn't load up image! %s", SDL_GetError());
+		success = false;
+	}
+	if (gDownTexture.loadFromFile("src/down.png") == false){
+		SDL_Log("Coultn't load down image! %s", SDL_GetError());
+		success = false;
+	}
+	if (gLeftTexture.loadFromFile("src/left.jpg") == false){
+		SDL_Log("Coultn't load left image! %s", SDL_GetError());
+		success = false;
+	}
+	if (gRightTexture.loadFromFile("src/right.jpg") == false){
+		SDL_Log("Coultn't load right image! %s", SDL_GetError());
+		success = false;
+	}
+	if (gWhiteTexture.loadFromFile("src/white.jpg") == false){
+		SDL_Log("Coultn't load white image! %s", SDL_GetError());
 		success = false;
 	}
 
@@ -70,7 +88,11 @@ bool loadMedia(){
 }
 
 void close(){
-	gPngTexture.destroy();
+	gUpTexture.destroy();
+	gDownTexture.destroy();
+	gLeftTexture.destroy();
+	gRightTexture.destroy();
+	gWhiteTexture.destroy();
 
 	SDL_DestroyRenderer(gRenderer);
 	gRenderer = nullptr;
@@ -83,9 +105,12 @@ void close(){
 
 
 
-
 int main(){
 	int exitCode {};
+
+	LTexture* currentTexture = &gWhiteTexture;
+
+	SDL_Color bgColor { 0xFF, 0xFF, 0xFF, 0xFF };
 
 
 	if (init() == false) {
@@ -109,12 +134,37 @@ int main(){
 					if (e.type == SDL_EVENT_QUIT){
 						quit = true;
 					}
+
+					else if (e.type == SDL_EVENT_KEY_DOWN) {
+						if (e.key.key == SDLK_UP){
+							currentTexture = &gUpTexture;
+						}
+						else if (e.key.key == SDLK_DOWN){
+							currentTexture = &gDownTexture;
+						}
+						else if (e.key.key == SDLK_LEFT){
+							currentTexture = &gLeftTexture;
+						}
+						else if (e.key.key == SDLK_RIGHT){
+							currentTexture = &gRightTexture;
+						}
+					}
+					else if (e.type == SDL_EVENT_KEY_UP) {
+						currentTexture = &gWhiteTexture;
+					}
+
 				}
 
-				SDL_SetRenderDrawColor(gRenderer, 0xFF, 0xFF, 0xFF, 0xFF);
+				// set white
+				bgColor.r = 0xFF;
+				bgColor.g = 0xFF;
+				bgColor.b = 0xFF;
+
+
+				SDL_SetRenderDrawColor(gRenderer, bgColor.r, bgColor.g, bgColor.b, 0xFF);
 				SDL_RenderClear(gRenderer);
 
-				gPngTexture.render(0.f, 0.f);
+				currentTexture->render( (kScreenWidth - currentTexture->getWidth()) * 0.5f, (kScreenHeight - currentTexture->getHeight()) * 0.5f);
 
 				SDL_RenderPresent( gRenderer );
 			}
