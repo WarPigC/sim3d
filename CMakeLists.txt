@@ -29,6 +29,7 @@ add_executable(
 	./src/main.cpp
 	./src/pos.cpp
 	./src/render.cpp
+	./src/cube.cpp
 )
 
 target_include_directories(sim3d PRIVATE ${CMAKE_SOURCE_DIR}/include)

@@ -1,9 +1,8 @@
 #ifndef SIM3D_H
 #define SIM3D_H
 
-#include <string>
+#include <iostream>
 #include <SDL3/SDL.h>
-#include <SDL3_image/SDL_image.h>
 #include <SDL3/SDL_main.h>
 #include <SDL3/SDL_error.h>
 #include <SDL3/SDL_render.h>
@@ -12,33 +11,29 @@
 int pos();
 int render();
 
-class LTexture{
-private:
-	SDL_Texture* mTexture;
+class cube {
+	private:
+		int x1, y1, x2, y2;
+	public:
+		cube(int, int, int, int);
 
-	int mWidth, mHeight;
+		// rule of 5
+		cube(cube&) = delete;
+		cube(cube&&) = delete;
 
+		cube& operator=(const cube&) = delete;
+		cube& operator=(cube&&) = delete;
 
-public:
-	LTexture();
+		int getX();
+		int getY();
+		int getSideLen();
 
-	~LTexture();
-
-	bool loadFromFile(std::string path);
-
-	void destroy();
-
-	void render(float, float);
-
-	int getWidth();
-	int getHeight();
-	bool isLoaded();
+		~cube();
 };
 
 
 extern SDL_Window* gWindow;
 extern SDL_Renderer* gRenderer;
-extern LTexture gUpTexture, gDownTexture, gLeftTexture, gRightTexture, gWhiteTexture;
 
 constexpr int kScreenWidth{ 1280 };
 constexpr int kScreenHeight{ 600 };
