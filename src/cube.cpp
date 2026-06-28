@@ -1,11 +1,25 @@
 #include "sim3d.h"
 
 
-cube::cube(int X1, int Y1, int X2, int Y2)
-	:x1 {X1},
-	y1 {Y1},
-	x2 {X2},
-	y2 {Y2}
+cube::cube(Coordinates c)
+	:A {c[0]},
+	B {c[1]},
+	C {c[2]},
+	D {c[3]}
 {
-	std::cout << "Initalized cube!";
+	std::cout << "Initalized cube!" << std::endl;
 }
+
+Coordinates cube::getCoordinates() {
+	return { A, B, C, D };
+}
+
+int cube::getSideLen() {
+
+	// length...
+	
+	return 0;
+}
+
+
+//NOTE: MAKE edge table AND vertice array FOR 3D cube

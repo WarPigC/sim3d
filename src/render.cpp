@@ -4,9 +4,9 @@
 
 #include "sim3d.h"
 
+//NOTE: start writing rendering logic
 
-int render() {
-	return 2;
+void cube::render() {
 
 
 

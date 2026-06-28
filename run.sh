@@ -1,1 +1,1 @@
-make -C ./build && ./bin/sim3d
+cmake --build build --target run

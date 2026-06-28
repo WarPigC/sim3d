@@ -5,10 +5,13 @@
 #include <sim3d.h>
 
 
+//NOTE: start writing updating calculations 
 
-int pos(){
-
-
-
-	return 1;
+void cube::updatePos(Directions direction){
+	switch(direction) {
+		case UP: { return; }
+		case DOWN: { return; }
+		case LEFT: { return; }
+		case RIGHT: { return; }
+	}
 }

@@ -49,10 +49,20 @@ int main(){
 
 		bool quit { false };
 
+		// screen does not follow cartesian plane, (0, 0) at bottom left
+		cube Cube({
+			{490, 490}, 
+			{510, 490},
+			{510, 510},
+			{490, 510}
+		});
+
 		SDL_Event e;
 		SDL_zero(e);
 
 		while ( quit == false ){
+
+			// Event loop
 			while (SDL_PollEvent(&e) == true) {
 				if (e.type == SDL_EVENT_QUIT){
 					quit = true;
@@ -60,21 +70,34 @@ int main(){
 
 				else if (e.type == SDL_EVENT_KEY_DOWN) {
 					if (e.key.key == SDLK_UP){
-						// do smth
+						Cube.updatePos(Directions::UP);
+					}
+					else if (e.key.key == SDLK_DOWN) {
+						Cube.updatePos(Directions::DOWN);
+					}
+					else if (e.key.key == SDLK_RIGHT) {
+						Cube.updatePos(Directions::RIGHT);
+					}
+					else if (e.key.key == SDLK_LEFT) {
+						Cube.updatePos(Directions::LEFT);
+					}
+					else {
+						continue;
 					}
 				}
+
+				/*
 				else if (e.type == SDL_EVENT_KEY_UP) {
-					// key released 
+
 				}
+				*/
 			}
 
-			/*
+			SDL_Color bgColor {0xFF, 0xFF, 0xFF, 0xFF};
 			SDL_SetRenderDrawColor(gRenderer, bgColor.r, bgColor.g, bgColor.b, 0xFF);
 
-			currentTexture->render( (kScreenWidth - currentTexture->getWidth()) * 0.5f, (kScreenHeight - currentTexture->getHeight()) * 0.5f);
-			*/
-
 			SDL_RenderClear(gRenderer);
+			Cube.render();
 			SDL_RenderPresent( gRenderer );
 		}
 		

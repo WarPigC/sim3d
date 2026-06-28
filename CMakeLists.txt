@@ -35,3 +35,9 @@ add_executable(
 target_include_directories(sim3d PRIVATE ${CMAKE_SOURCE_DIR}/include)
 
 target_link_libraries(sim3d PRIVATE SDL3::SDL3 SDL3_image::SDL3_image)
+
+add_custom_target( run
+	COMMAND sim3d
+	DEPENDS sim3d
+	WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+)
